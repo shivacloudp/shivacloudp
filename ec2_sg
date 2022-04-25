@@ -1,0 +1,33 @@
+}
+resource "aws_security_group" "mysg" {
+  name = "terraformsg"
+  vpc_id = "vpc-0b2e8e6dafe4d3efd"
+
+  ingress {
+    description = "inbound rules"
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "outbound rules"
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    "name" = "mysg"
+  }
+}
+resource "aws_instance" "server" {
+  count = 3
+  ami = "${var.ami}"
+  instance_type = "${var.instance_type}"
+  key_name = "${var.key_name}"
+  security_groups = ["terraformsg"]
+  tags = {
+   Name = "Terrafrom Server - ${count.index}"
+  }
+}
