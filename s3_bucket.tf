@@ -1,15 +1,14 @@
-provider "aws" {
-    access_key = "AKIAXD2DRGSJ3SNGFAXE"
-    secret_key = "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"
+/*provider "aws" {
+    access_key = "AKIAXD2DRGSJ3sSNGFAXE"
+    secret_key = "aizGr/puQ9yK9jz+kEVsnYd9xtscIpTOC67mrMUhZ"
     region = "ap-south-1"
   
-}
+}*/
 
-resource "aws_s3_bucket" "b" {
-  bucket = "gsk-test-bucket"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+terraform {
+  backend "s3" {
+    bucket = "gsk-test"
+    key    = "key/terraform.tfstate"
+    region = "ap-south-1"
   }
 }
